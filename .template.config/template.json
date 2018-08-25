@@ -1,0 +1,12 @@
+{
+  "author": "农码一生",
+  "classifications": [ "Web" ], 
+  "name": "My Project Boilerplate",
+  "identity": "ProjectNameTemplate",         
+  "shortName": "myproject",                 // You can create the project using this short name instead of the one above.
+  "tags": {
+    "language": "C#"                       // Specify that this template is in C#.
+  },
+  "sourceName": "ProjectNameTemplate",      // Will replace the string 'SayedHa.StarterWe' with the value provided via -n.
+  "preferNameDirectory":"true"
+}
