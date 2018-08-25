@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace ProjectNameTemplate.Repository
 {
-    public class Class1
+    class DBContext
     {
     }
 }

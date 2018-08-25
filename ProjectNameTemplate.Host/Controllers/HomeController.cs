@@ -4,17 +4,19 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ProjectNameTemplate.WebHost.Models;
+using ProjectNameTemplate.Host.Models;
 
-namespace ProjectNameTemplate.WebHost.Controllers
+namespace ProjectNameTemplate.Host.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
+        [HttpGet,HttpPost]
         public IActionResult Index()
         {
             return View();
         }
 
+        [HttpGet, HttpPost]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

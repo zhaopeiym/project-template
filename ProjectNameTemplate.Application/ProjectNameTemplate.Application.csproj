@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <Folder Include="Dtos\" />
+    <Folder Include="Managers\" />
   </ItemGroup>
 
   <ItemGroup>

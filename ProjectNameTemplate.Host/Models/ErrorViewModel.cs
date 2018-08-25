@@ -1,6 +1,6 @@
 using System;
 
-namespace ProjectNameTemplate.WebHost.Models
+namespace ProjectNameTemplate.Host.Models
 {
     public class ErrorViewModel
     {

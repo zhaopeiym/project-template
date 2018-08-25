@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>zp2.Host</name>
+    </assembly>
+    <members>
+        <member name="M:zp2.Host.Filters.ActionFilter.OnActionExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate)">
+            <summary>
+            ActionExecution
+            </summary>
+            <param name="context"></param>
+            <param name="next"></param>
+        </member>
+        <member name="T:zp2.Host.Startup">
+            <summary>
+            模版来源：
+            https://github.com/zhaopeiym/Boilerplate/issues
+            </summary>
+        </member>
+        <member name="M:zp2.Host.Startup.LogConfig">
+            <summary>
+            日志配置
+            </summary>      
+        </member>
+    </members>
+</doc>

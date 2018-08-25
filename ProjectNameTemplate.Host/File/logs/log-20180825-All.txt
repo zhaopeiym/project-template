@@ -1,0 +1,84 @@
+2018-08-25 15:24:00.022 +08:00 [Debug] ActionBegin - HashCode:27358527 Url:/api/Home/Index Parameter:
+2018-08-25 15:24:06.249 +08:00 [Error] OnException - HashCode:51352829 Url:/api/Home/Index Err:'Microsoft.AspNetCore.Mvc.ViewResult' does not contain a definition for 'Value'
+Microsoft.CSharp.RuntimeBinder.RuntimeBinderException: 'Microsoft.AspNetCore.Mvc.ViewResult' does not contain a definition for 'Value'
+   at CallSite.Target(Closure , CallSite , Object )
+   at System.Dynamic.UpdateDelegates.UpdateAndExecute1[T0,TRet](CallSite site, T0 arg0)
+   at ProjectNameTemplate.Host.Filters.ActionFilter.OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next) in D:\Users\benny\Documents\Code\project-template\ProjectNameTemplate.WebHost\Filters\ActionFilter.cs:line 68
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+2018-08-25 15:24:50.949 +08:00 [Debug] ActionBegin - HashCode:21044963 Url:/api/Home/Index Parameter:
+2018-08-25 15:25:13.783 +08:00 [Error] OnException - HashCode:58712211 Url:/api/Home/Index Err:'Microsoft.AspNetCore.Mvc.ViewResult' does not contain a definition for 'Value'
+Microsoft.CSharp.RuntimeBinder.RuntimeBinderException: 'Microsoft.AspNetCore.Mvc.ViewResult' does not contain a definition for 'Value'
+   at CallSite.Target(Closure , CallSite , Object )
+   at ProjectNameTemplate.Host.Filters.ActionFilter.OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next) in D:\Users\benny\Documents\Code\project-template\ProjectNameTemplate.WebHost\Filters\ActionFilter.cs:line 68
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+2018-08-25 15:25:17.267 +08:00 [Debug] ActionBegin - HashCode:49538252 Url:/api/Home/Index Parameter:
+2018-08-25 15:26:10.221 +08:00 [Debug] ActionBegin - HashCode:51980103 Url:/api/Home/Index Parameter:
+2018-08-25 15:26:29.282 +08:00 [Error] OnException - HashCode:26925267 Url:/api/Home/Index Err:'Microsoft.AspNetCore.Mvc.ViewResult' does not contain a definition for 'Value'
+Microsoft.CSharp.RuntimeBinder.RuntimeBinderException: 'Microsoft.AspNetCore.Mvc.ViewResult' does not contain a definition for 'Value'
+   at CallSite.Target(Closure , CallSite , Object )
+   at System.Dynamic.UpdateDelegates.UpdateAndExecute1[T0,TRet](CallSite site, T0 arg0)
+   at ProjectNameTemplate.Host.Filters.ActionFilter.OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next) in D:\Users\benny\Documents\Code\project-template\ProjectNameTemplate.WebHost\Filters\ActionFilter.cs:line 68
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeNextActionFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Rethrow(ActionExecutedContext context)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Internal.ControllerActionInvoker.InvokeInnerFilterAsync()
+   at Microsoft.AspNetCore.Mvc.Internal.ResourceInvoker.InvokeNextExceptionFilterAsync()
+2018-08-25 15:26:33.465 +08:00 [Debug] ActionBegin - HashCode:23897065 Url:/api/Home/Index Parameter:
+2018-08-25 15:27:55.257 +08:00 [Debug] ActionBegin - HashCode:38865907 Url:/api/Home/Index Parameter:
+2018-08-25 15:28:02.110 +08:00 [Debug] ActionEnd - HashCode:38865907 耗时:0.1854187秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:00:59.026 +08:00 [Debug] ActionBegin - HashCode:43361401 Url:/home/index Parameter:
+2018-08-25 16:00:59.054 +08:00 [Debug] ActionEnd - HashCode:43361401 耗时:0.0152356秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:02:30.127 +08:00 [Debug] ActionBegin - HashCode:56772630 Url:/Home/index Parameter:
+2018-08-25 16:02:30.128 +08:00 [Debug] ActionEnd - HashCode:56772630 耗时:0.0004997秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:03:32.804 +08:00 [Debug] ActionBegin - HashCode:56958977 Url:/Home/index Parameter:
+2018-08-25 16:03:32.805 +08:00 [Debug] ActionEnd - HashCode:56958977 耗时:0.0008871秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:03:33.740 +08:00 [Debug] ActionBegin - HashCode:39960273 Url:/Home/index Parameter:
+2018-08-25 16:03:33.741 +08:00 [Debug] ActionEnd - HashCode:39960273 耗时:0.000746秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:03:33.999 +08:00 [Debug] ActionBegin - HashCode:2389281 Url:/Home/index Parameter:
+2018-08-25 16:03:33.999 +08:00 [Debug] ActionEnd - HashCode:2389281 耗时:0.0003061秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:04:16.515 +08:00 [Debug] ActionBegin - HashCode:63640897 Url:/Home/index Parameter:
+2018-08-25 16:04:16.516 +08:00 [Debug] ActionEnd - HashCode:63640897 耗时:0.0003293秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:04:24.058 +08:00 [Debug] ActionBegin - HashCode:62721296 Url:/Home/index Parameter:
+2018-08-25 16:04:24.058 +08:00 [Debug] ActionEnd - HashCode:62721296 耗时:0.0002106秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:04:26.549 +08:00 [Debug] ActionBegin - HashCode:12454966 Url:/Home/index Parameter:
+2018-08-25 16:04:26.550 +08:00 [Debug] ActionEnd - HashCode:12454966 耗时:0.000116秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:04:26.723 +08:00 [Debug] ActionBegin - HashCode:57399495 Url:/Home/index Parameter:
+2018-08-25 16:04:26.724 +08:00 [Debug] ActionEnd - HashCode:57399495 耗时:0.0001633秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:04:26.884 +08:00 [Debug] ActionBegin - HashCode:57744979 Url:/Home/index Parameter:
+2018-08-25 16:04:26.884 +08:00 [Debug] ActionEnd - HashCode:57744979 耗时:0.0001414秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:05:53.212 +08:00 [Debug] ActionBegin - HashCode:17066791 Url:/home/index Parameter:
+2018-08-25 16:05:53.212 +08:00 [Debug] ActionBegin - HashCode:10705893 Url:/home/index Parameter:
+2018-08-25 16:05:53.212 +08:00 [Debug] ActionBegin - HashCode:37990405 Url:/home/index Parameter:
+2018-08-25 16:05:53.212 +08:00 [Debug] ActionBegin - HashCode:52607871 Url:/home/index Parameter:
+2018-08-25 16:05:53.212 +08:00 [Debug] ActionBegin - HashCode:19147083 Url:/home/index Parameter:
+2018-08-25 16:05:53.212 +08:00 [Debug] ActionBegin - HashCode:11727494 Url:/home/index Parameter:
+2018-08-25 16:05:53.257 +08:00 [Debug] ActionEnd - HashCode:17066791 耗时:0.0184627秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:05:53.257 +08:00 [Debug] ActionEnd - HashCode:37990405 耗时:0.0184649秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:05:53.258 +08:00 [Debug] ActionEnd - HashCode:52607871 耗时:0.0184569秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:05:53.258 +08:00 [Debug] ActionEnd - HashCode:10705893 耗时:0.0184698秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:05:53.258 +08:00 [Debug] ActionEnd - HashCode:11727494 耗时:0.01846秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:05:53.258 +08:00 [Debug] ActionEnd - HashCode:19147083 耗时:0.0184694秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:08:06.788 +08:00 [Debug] ActionBegin - HashCode:55990287 Url:/Home/index Parameter:
+2018-08-25 16:08:06.819 +08:00 [Debug] ActionEnd - HashCode:55990287 耗时:0.0160517秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:11:22.117 +08:00 [Debug] ActionBegin - HashCode:33641611 Url:/Home/index Parameter:
+2018-08-25 16:11:22.185 +08:00 [Debug] ActionEnd - HashCode:33641611 耗时:0.0178625秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:14:08.570 +08:00 [Debug] ActionBegin - HashCode:43255417 Url:/ Parameter:
+2018-08-25 16:14:08.640 +08:00 [Debug] ActionEnd - HashCode:43255417 耗时:0.0172369秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:14:38.693 +08:00 [Debug] ActionBegin - HashCode:42832919 Url:/ Parameter:
+2018-08-25 16:14:38.721 +08:00 [Debug] ActionEnd - HashCode:42832919 耗时:0.0166541秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:15:02.271 +08:00 [Debug] ActionBegin - HashCode:42481754 Url:/ Parameter:
+2018-08-25 16:15:02.298 +08:00 [Debug] ActionEnd - HashCode:42481754 耗时:0.0137215秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:16:04.714 +08:00 [Debug] ActionBegin - HashCode:8778466 Url:/Home/index Parameter:
+2018-08-25 16:16:04.743 +08:00 [Debug] ActionEnd - HashCode:8778466 耗时:0.0166796秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:16:48.137 +08:00 [Debug] ActionBegin - HashCode:235885 Url:/Home/index Parameter:
+2018-08-25 16:16:48.138 +08:00 [Debug] ActionEnd - HashCode:235885 耗时:0.0001892秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}
+2018-08-25 16:27:16.635 +08:00 [Debug] ActionBegin - HashCode:22835640 Url:/home/index Parameter:
+2018-08-25 16:27:16.674 +08:00 [Debug] ActionEnd - HashCode:22835640 耗时:0.0234047秒 Result:{"IsSuccess":true,"State":1,"Data":{"StatusCode":null,"ViewName":null,"Model":null,"ViewData":{},"TempData":{},"ViewEngine":null,"ContentType":null}

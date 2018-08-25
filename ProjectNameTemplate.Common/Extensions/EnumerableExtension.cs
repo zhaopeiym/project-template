@@ -24,7 +24,7 @@ namespace ProjectNameTemplate.Common.Extensions
             return lstVal;
         }
 
-        public static List<T> WhereIfAdd<T>(this IEnumerable<T> list, bool condition, T item)
+        public static List<T> AddIf<T>(this IEnumerable<T> list, bool condition, T item)
         {
             var myList = list?.ToList();
             if (condition) myList?.Add(item);
