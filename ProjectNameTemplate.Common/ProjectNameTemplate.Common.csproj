@@ -6,8 +6,10 @@
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Serilog" Version="2.7.1" />
     <PackageReference Include="SharpZipLib" Version="1.0.0" />
     <PackageReference Include="StackExchange.Redis" Version="1.2.6" />
+    <PackageReference Include="Talk" Version="0.0.0.7-pre" />
   </ItemGroup>
 
 </Project>

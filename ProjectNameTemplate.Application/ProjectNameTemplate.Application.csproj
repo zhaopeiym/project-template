@@ -10,12 +10,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\" />
-    <Folder Include="Managers\" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Serilog" Version="2.7.1" />
+    <PackageReference Include="Talk" Version="0.0.0.7-pre" />
+    <PackageReference Include="Talk.AutoMap.Extensions" Version="1.0.2.6-pre" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <Folder Include="Dtos\" />
+    <Folder Include="Managers\" />
   </ItemGroup>
 
 </Project>

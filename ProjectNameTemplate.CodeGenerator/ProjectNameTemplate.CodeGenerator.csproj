@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
+    <ApplicationIcon />
+    <OutputType>Exe</OutputType>
+    <StartupObject />
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,16 +13,12 @@
     <PackageReference Include="MySqlConnector" Version="0.44.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="Serilog" Version="2.7.1" />
-    <PackageReference Include="Talk" Version="0.0.0.7-pre" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProjectNameTemplate.Common\ProjectNameTemplate.Common.csproj" />
-    <ProjectReference Include="..\ProjectNameTemplate.Core\ProjectNameTemplate.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Repository\" />
+    <None Update="config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

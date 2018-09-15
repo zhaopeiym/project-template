@@ -1,24 +1,22 @@
 ﻿using Autofac;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Talk;
 
 namespace ProjectNameTemplate.Tests
 {
     public abstract class TestBase
     {
-
         public IContainer container;
         public TestBase()
         {
-            container = InitContainerBuilder(new ContainerBuilder());
+            var module = ModuleManager.Create<StartModule>();
+            var builder = module.ContainerBuilder;                   
+            module.Initialize();
+            container = module.Container;
         }
 
         public virtual T Resolve<T>()
         {
             return container.Resolve<T>();
         }
-
-        protected abstract IContainer InitContainerBuilder(ContainerBuilder container);
     }
 }

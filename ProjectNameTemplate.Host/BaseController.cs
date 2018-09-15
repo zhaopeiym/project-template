@@ -9,5 +9,9 @@ namespace ProjectNameTemplate.Host
     [Route("[controller]/[action]")]
     public class BaseController: Controller
     {
+        /// <summary>
+        /// 日记记录器
+        /// </summary>
+        public Serilog.ILogger Logger { get; set; }
     }
 }

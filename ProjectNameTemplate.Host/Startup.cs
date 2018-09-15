@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using AutofacSerilogIntegration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -14,6 +17,7 @@ using ProjectNameTemplate.Host.Filters;
 using Serilog;
 using Serilog.Events;
 using Swashbuckle.AspNetCore.Swagger;
+using Talk;
 
 namespace ProjectNameTemplate.Host
 {
@@ -31,7 +35,7 @@ namespace ProjectNameTemplate.Host
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             // 日志配置
             LogConfig();
@@ -64,6 +68,8 @@ namespace ProjectNameTemplate.Host
                 var xmlPath = Path.Combine(basePath, "ProjectNameTemplate.Host.xml");
                 options.IncludeXmlComments(xmlPath);
             });
+
+            return new AutofacServiceProvider(InitContainerBuilder(services));//第三方IOC接管 core内置DI容器 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -94,6 +100,26 @@ namespace ProjectNameTemplate.Host
                     template: "{action}/{controller}/{id?}",
                     defaults: new { controller = "Home", action = "Index" });
             });
+        }
+
+        /// <summary>
+        /// 初始化 注入容器
+        /// </summary>
+        private IContainer InitContainerBuilder(IServiceCollection services)
+        {
+            services.AddDirectoryBrowser();
+            var module = ModuleManager.Create<HostModule>();
+            var builder = module.ContainerBuilder;            
+            var tyeps = typeof(Startup).Assembly
+                .GetTypes()
+                .Where(t => t.IsClass && t.Name.EndsWith("Controller"))
+                .ToArray();
+            //注入MVC控制器（配置属性注入）
+            builder.RegisterTypes(tyeps).PropertiesAutowired();            
+            builder.RegisterLogger();//https://github.com/nblumhardt/autofac-serilog-integration
+            builder.Populate(services);
+            module.Initialize();
+            return module.Container;
         }
 
         /// <summary>
