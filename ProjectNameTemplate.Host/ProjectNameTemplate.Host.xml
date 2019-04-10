@@ -4,6 +4,11 @@
         <name>ProjectNameTemplate.Host</name>
     </assembly>
     <members>
+        <member name="P:ProjectNameTemplate.Host.BaseController.Logger">
+            <summary>
+            日记记录器
+            </summary>
+        </member>
         <member name="M:ProjectNameTemplate.Host.Filters.ActionFilter.OnActionExecutionAsync(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext,Microsoft.AspNetCore.Mvc.Filters.ActionExecutionDelegate)">
             <summary>
             ActionExecution
@@ -11,10 +16,66 @@
             <param name="context"></param>
             <param name="next"></param>
         </member>
+        <member name="M:ProjectNameTemplate.Host.Filters.ActionFilter.WriteLog(StackExchange.Profiling.MiniProfiler)">
+            <summary>
+            sql跟踪
+            </summary>
+            <param name="profiler"></param>
+        </member>
+        <member name="T:ProjectNameTemplate.Host.Filters.AuthorizationFilter">
+            <summary>
+            登录、权限拦截器
+            </summary>
+        </member>
+        <member name="T:ProjectNameTemplate.Host.Filters.AuthorizeAttribute">
+            <summary>
+            权限验证特性
+            </summary>    
+        </member>
+        <member name="F:ProjectNameTemplate.Host.Filters.AuthorizeAttribute.Permissions">
+            <summary>
+            权限集合
+            </summary>
+        </member>
+        <member name="P:ProjectNameTemplate.Host.Models.ResultBase`1.IsSuccess">
+            <summary>
+            请求是否成功
+            </summary>
+        </member>
+        <member name="P:ProjectNameTemplate.Host.Models.ResultBase`1.IsUserErr">
+            <summary>
+            是否为用户友好异常
+            </summary>
+        </member>
+        <member name="P:ProjectNameTemplate.Host.Models.ResultBase`1.ErrorMsg">
+            <summary>
+            异常消息
+            </summary>
+        </member>
+        <member name="P:ProjectNameTemplate.Host.Models.ResultBase`1.ResultUrl">
+            <summary>
+            重定向地址
+            </summary>
+        </member>
+        <member name="P:ProjectNameTemplate.Host.Models.ResultBase`1.Data">
+            <summary>
+            请求结果
+            </summary>
+        </member>
+        <member name="P:ProjectNameTemplate.Host.Models.ResultBase`1.TrackId">
+            <summary>
+            请求跟踪id
+            </summary>
+        </member>
         <member name="T:ProjectNameTemplate.Host.Startup">
             <summary>
             模版来源：
             https://github.com/zhaopeiym/Boilerplate/issues
+            </summary>
+        </member>
+        <member name="M:ProjectNameTemplate.Host.Startup.InitContainerBuilder(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            初始化 注入容器
             </summary>
         </member>
         <member name="M:ProjectNameTemplate.Host.Startup.LogConfig">

@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using ProjectNameTemplate.Host.Models;
 using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace ProjectNameTemplate.Host.Filters
 {
@@ -22,7 +19,7 @@ namespace ProjectNameTemplate.Host.Filters
             var requestUrl = context.HttpContext.Request.Path.Value;
             Logger.Error(context.Exception, $"OnException - HashCode:{GetHashCode()} Url:{requestUrl} Err:{context.Exception.Message}");
 
-            context.Result = new JsonResult(new
+            context.Result = new JsonResult(new ResultBase()
             {
                 IsSuccess = false,
                 State = 0,

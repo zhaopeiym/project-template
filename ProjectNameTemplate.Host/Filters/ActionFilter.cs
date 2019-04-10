@@ -1,25 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
-using Serilog;
-using Serilog.Core;
+using ProjectNameTemplate.Common.Extensions;
+using ProjectNameTemplate.Core;
+using StackExchange.Profiling;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using ProjectNameTemplate.Host.Models;
 
 namespace ProjectNameTemplate.Host.Filters
 {
     public class ActionFilter : IAsyncActionFilter
     {
-        ILogger Logger;
-
-        public ActionFilter()
+        private ITalkLogger Logger;
+        private ITalkSession session;
+        public ActionFilter(ITalkSession session,
+            ITalkLogger Logger)
         {
-
-            Logger = Log.Logger;
+            this.Logger = Logger;
+            this.session = session;
         }
 
         /// <summary>
@@ -45,7 +48,7 @@ namespace ProjectNameTemplate.Host.Filters
 
                 Logger.Error($"实体验证失败 - HashCode:{GetHashCode()} {string.Join(" ", errList)}");
 
-                context.Result = new JsonResult(new
+                context.Result = new JsonResult(new ResultBase()
                 {
                     ErrorList = errList.ToList(),
                     IsSuccess = false,
@@ -56,8 +59,16 @@ namespace ProjectNameTemplate.Host.Filters
             }
             #endregion
 
-            //执行
-            var actionExecutedContext = await next();
+            #region 执行，并监控执行sql 
+            var profiler = context.HttpContext.Items["StartNew"] as MiniProfiler;
+            ActionExecutedContext actionExecutedContext = null;
+            using (profiler.Step("Level1"))
+            {
+                actionExecutedContext = await next();
+            }
+            WriteLog(profiler);
+            if (profiler != null) await profiler?.StopAsync(true);
+            #endregion
 
             #region 执行之后
             stopwatch.Stop(); //  停止监视 
@@ -97,7 +108,7 @@ namespace ProjectNameTemplate.Host.Filters
                                                                     Url:{requestUrl}                                                                  
                                                                     Err:{actionExecutedContext.Exception.Message}");
 
-                actionExecutedContext.Result = new JsonResult(new
+                actionExecutedContext.Result = new JsonResult(new ResultBase()
                 {
                     IsSuccess = false,
                     State = 500,
@@ -112,6 +123,56 @@ namespace ProjectNameTemplate.Host.Filters
             }
 
             #endregion
+        }
+
+        /// <summary>
+        /// sql跟踪
+        /// </summary>
+        /// <param name="profiler"></param>
+        private void WriteLog(MiniProfiler profiler)
+        {
+            if (profiler?.Root != null)
+            {
+                var root = profiler.Root;
+                if (root.HasChildren)
+                {
+                    root.Children.ForEach(chil =>
+                    {
+                        if (chil.CustomTimings?.Count > 0)
+                        {
+                            foreach (var customTiming in chil.CustomTimings)
+                            {
+                                var all_sql = new List<string>();
+                                var err_sql = new List<string>();
+                                var all_log = new List<string>();
+                                int i = 1;
+                                customTiming.Value?.ForEach(value =>
+                                {
+                                    if (value.ExecuteType != "OpenAsync")
+                                        all_sql.Add(value.CommandString.Replace("\r", "").Replace("\n", "").Replace("\t", "")
+                                            .Replace("      ", " ").Replace("     ", " ")
+                                            .Replace("    ", " ").Replace("   ", " ")
+                                            .Replace("  ", " "));
+                                    if (value.Errored)
+                                        err_sql.Add(value.CommandString.Replace("\r", "").Replace("\n", "").Replace("\t", "")
+                                            .Replace("      ", " ").Replace("     ", " ")
+                                            .Replace("    ", " ").Replace("   ", " ")
+                                            .Replace("  ", " "));
+                                    var log = $@"【{customTiming.Key}{i++}】{value.CommandString.Replace("\r", "").Replace("\n", "").Replace("\t", "")
+                                            .Replace("      ", " ").Replace("     ", " ")
+                                            .Replace("    ", " ").Replace("   ", " ")
+                                            .Replace("  ", " ")} Execute time :{value.DurationMilliseconds} ms,Start offset :{value.StartMilliseconds} ms,Errored :{value.Errored}";
+                                    all_log.Add(log);
+                                });
+
+                                if (err_sql.IsAny())
+                                    Logger.Error(new Exception("sql异常"), "异常sql:\r\n" + err_sql.StringJoin("\r\n"), sql: err_sql.StringJoin("\r\n\r\n"));
+                                Logger.Debug(all_log.StringJoin("\r\n"), sql: all_sql.StringJoin("\r\n\r\n"));
+                            }
+                        }
+                    });
+                }
+            }
         }
     }
 }

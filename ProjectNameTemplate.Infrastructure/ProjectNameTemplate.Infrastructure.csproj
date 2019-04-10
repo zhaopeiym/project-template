@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProjectNameTemplate.Constant\ProjectNameTemplate.Constant.csproj" />
+    <ProjectReference Include="..\ProjectNameTemplate.Core\ProjectNameTemplate.Core.csproj" />
+  </ItemGroup>
+
+</Project>
