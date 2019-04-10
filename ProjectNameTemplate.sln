@@ -33,7 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectNameTemplate.CodeGen
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectNameTemplate.Constant", "ProjectNameTemplate.Constant\ProjectNameTemplate.Constant.csproj", "{CDB47AEB-38FB-4110-AEF8-3DD5DE76388B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectNameTemplate.Infrastructure", "ProjectNameTemplate.Infrastructure\ProjectNameTemplate.Infrastructure.csproj", "{BB960B6E-8823-46FD-953D-D3458F19DA7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectNameTemplate.Infrastructure", "ProjectNameTemplate.Infrastructure\ProjectNameTemplate.Infrastructure.csproj", "{BB960B6E-8823-46FD-953D-D3458F19DA7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -89,7 +89,7 @@ Global
 		{7F8ED8EF-1759-486F-AC59-393277C507D3} = {DB0F1E0D-D75E-459E-83E1-5CD59811CB3B}
 		{BC372421-B90C-437C-876B-0D06340EDDE1} = {BD355EED-399C-49C3-9190-A4F1028B63C1}
 		{E5CABF20-B017-4AAA-B9FD-DF12D7BE9586} = {27BF29B1-D2FD-4FCF-8BDE-5A31127975B3}
-		{CDB47AEB-38FB-4110-AEF8-3DD5DE76388B} = {4CDD5560-0D4D-4F1C-9CC6-07BE861F3DDE}
+		{CDB47AEB-38FB-4110-AEF8-3DD5DE76388B} = {DB0F1E0D-D75E-459E-83E1-5CD59811CB3B}
 		{BB960B6E-8823-46FD-953D-D3458F19DA7C} = {4CDD5560-0D4D-4F1C-9CC6-07BE861F3DDE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
