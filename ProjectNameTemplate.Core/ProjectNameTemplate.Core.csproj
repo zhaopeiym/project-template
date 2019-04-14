@@ -5,10 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MySqlConnector" Version="0.51.1" />
+    <PackageReference Include="Dapper.Contrib" Version="1.60.1" />
+    <PackageReference Include="MySqlConnector" Version="0.52.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="Serilog" Version="2.7.1" />
     <PackageReference Include="Talk" Version="0.0.0.15" />
+    <PackageReference Include="Talk.Extensions" Version="1.0.1.27" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,6 @@
-﻿namespace ProjectNameTemplate.Constant
+﻿using ProjectNameTemplate.Common;
+
+namespace ProjectNameTemplate.Constant
 {
     /// <summary>
     /// 配置
@@ -13,5 +15,9 @@
         public static string LogMailHost => ConfigurationManager.GetConfig("LogMail:MailHost");
         public static string LogMailTo => ConfigurationManager.GetConfig("LogMail:MailTo");
         public static string LogMailLevel => ConfigurationManager.GetConfig("LogMail:LogLevel");
+        /// <summary>
+        /// 数据库连接
+        /// </summary>
+        public static string MySQLSPConnection => ConfigurationManager.GetConfig("MySQLSPConnection");
     }
 }

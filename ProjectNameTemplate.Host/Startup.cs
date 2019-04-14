@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
@@ -18,6 +19,7 @@ using Serilog;
 using Serilog.Events;
 using Swashbuckle.AspNetCore.Swagger;
 using Talk;
+using Talk.AutoMap.Extensions;
 
 namespace ProjectNameTemplate.Host
 {
@@ -47,9 +49,17 @@ namespace ProjectNameTemplate.Host
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //https://docs.microsoft.com/zh-cn/aspnet/core/web-api/?view=aspnetcore-2.1
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                //options.SuppressConsumesConstraintForFormFileParameters = true;   //关闭请求multipart推断
+                //options.SuppressInferBindingSourcesForParameters = true;          //关闭类型参数推断
+                options.SuppressModelStateInvalidFilter = true;   //关闭自动验证对象属性并处理
+            });
 
             services.AddMvc(options =>
             {
+                options.Filters.Add<AuthorizationFilter>();
                 options.Filters.Add<ActionFilter>();
                 options.Filters.Add<ExceptionFilter>();
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -68,6 +78,9 @@ namespace ProjectNameTemplate.Host
                 var xmlPath = Path.Combine(basePath, "ProjectNameTemplate.Host.xml");
                 options.IncludeXmlComments(xmlPath);
             });
+
+            //TODO  这里修改成需要映射的类库集合
+            AutoMapperModule.Initialize(Assembly.Load("ProjectNameTemplate.Host").GetTypes());
 
             return new AutofacServiceProvider(InitContainerBuilder(services));//第三方IOC接管 core内置DI容器 
         }

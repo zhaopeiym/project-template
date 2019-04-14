@@ -8,5 +8,6 @@ namespace ProjectNameTemplate.Infrastructure
         public Guid TrackId { get; }
         public long UserId { get; set; }
         public string UserName { get; set; }
+        public object MiniProfiler { get; set; }
     }
 }

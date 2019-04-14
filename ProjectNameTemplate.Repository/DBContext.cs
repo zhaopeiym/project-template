@@ -1,7 +1,13 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Dapper.Contrib.Extensions;
+using MySql.Data.MySqlClient;
+using ProjectNameTemplate.Constant;
+using ProjectNameTemplate.Core;
 using ProjectNameTemplate.Core.IRepository;
+using StackExchange.Profiling;
+using StackExchange.Profiling.Data;
 using System;
 using System.Data;
+using System.Data.Common;
 
 namespace ProjectNameTemplate.Repository
 {
@@ -15,15 +21,17 @@ namespace ProjectNameTemplate.Repository
     /// </summary>
     public class DBContext : IDBContext
     {
+        public ITalkSession session;
 
-        public DBContext()
+        public DBContext(ITalkSession userModel)
         {
+            this.session = userModel;
         }
 
         /// <summary>
         /// 数据库连接字符串
         /// </summary>
-        private string MySqlConn => "";
+        private string MySqlConn => AppSetting.MySQLSPConnection;
 
 
         private IDbConnection _dbConnection;
@@ -36,9 +44,18 @@ namespace ProjectNameTemplate.Repository
             get
             {
                 if (!string.IsNullOrEmpty(MySqlConn))
-                {
+                {                   
                     if (_dbConnection == null)
+                    {
                         _dbConnection = new MySqlConnection(MySqlConn);
+                        // 这里 MiniProfiler.Current 为空，应该是异步切换了线程？
+                        if (session.MiniProfiler != null)
+                        {
+                            _dbConnection = new ProfiledDbConnection((DbConnection)_dbConnection, (MiniProfiler)session.MiniProfiler);
+                            //https://stackoverflow.com/questions/50581540/dapper-contrib-and-miniprofiler-for-mysql-integration-issues
+                            SqlMapperExtensions.GetDatabaseType = conn => "MySqlConnection";
+                        }
+                    }
                 }
                 else
                     throw new Exception("缺少MySQL配置");
@@ -48,25 +65,17 @@ namespace ProjectNameTemplate.Repository
 
         private IDbTransaction DbTransaction { get; set; }
 
-        private bool committed = true;
-
         /// <summary>
         /// 是否已被提交
         /// </summary>
-        public bool Committed
-        {
-            get
-            {
-                return committed;
-            }
-        }
+        public bool Committed { get; private set; } = true;
 
         /// <summary>
         /// 开启事务
         /// </summary>
         public void BeginTransaction()
         {
-            committed = false;
+            Committed = false;
             bool isClosed = DbConnection.State == ConnectionState.Closed;
             if (isClosed) DbConnection.Open();
             DbTransaction = DbConnection?.BeginTransaction();
@@ -78,7 +87,7 @@ namespace ProjectNameTemplate.Repository
         public void CommitTransaction()
         {
             DbTransaction?.Commit();
-            committed = true;
+            Committed = true;
         }
 
         /// <summary>
@@ -87,7 +96,7 @@ namespace ProjectNameTemplate.Repository
         public void RollBackTransaction()
         {
             DbTransaction?.Rollback();
-            committed = true;
+            Committed = true;
         }
 
         /// <summary>

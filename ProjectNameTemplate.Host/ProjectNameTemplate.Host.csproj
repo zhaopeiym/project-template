@@ -29,6 +29,8 @@
     <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
     <PackageReference Include="Talk" Version="0.0.0.15" />
+    <PackageReference Include="Talk.Extensions" Version="1.0.1.27" />
+    <PackageReference Include="Talk.Linq.Extensions" Version="1.0.2.14" />
   </ItemGroup>
 
   <ItemGroup>

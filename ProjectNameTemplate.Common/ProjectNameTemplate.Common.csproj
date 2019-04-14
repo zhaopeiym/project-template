@@ -18,10 +18,7 @@
     <PackageReference Include="SharpZipLib" Version="1.0.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.0.600" />
     <PackageReference Include="Talk" Version="0.0.0.15" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\ProjectNameTemplate.Constant\ProjectNameTemplate.Constant.csproj" />
+    <PackageReference Include="Talk.Extensions" Version="1.0.1.27" />
   </ItemGroup>
 
 </Project>

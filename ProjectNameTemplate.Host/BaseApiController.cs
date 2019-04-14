@@ -3,12 +3,9 @@ using ProjectNameTemplate.Core;
 
 namespace ProjectNameTemplate.Host
 {
-
-    /// <summary>
-    /// 如果不标记Route 则swagger生成不了
-    /// </summary>
-    [Route("[controller]/[Action]")]
-    public class BaseController : Controller
+    [Route("api/[controller]/[Action]")]
+    [ApiController]
+    public class BaseApiController : ControllerBase
     {
         /// <summary>
         /// 日记记录器

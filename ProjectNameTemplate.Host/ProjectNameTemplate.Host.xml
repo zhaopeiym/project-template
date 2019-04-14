@@ -4,6 +4,16 @@
         <name>ProjectNameTemplate.Host</name>
     </assembly>
     <members>
+        <member name="P:ProjectNameTemplate.Host.BaseApiController.Logger">
+            <summary>
+            日记记录器
+            </summary>
+        </member>
+        <member name="T:ProjectNameTemplate.Host.BaseController">
+            <summary>
+            如果不标记Route 则swagger生成不了
+            </summary>
+        </member>
         <member name="P:ProjectNameTemplate.Host.BaseController.Logger">
             <summary>
             日记记录器

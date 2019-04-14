@@ -25,8 +25,9 @@ namespace ProjectNameTemplate.Host.Filters
 
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
+            session.MiniProfiler = MiniProfiler.StartNew("StartNew");
             //开启MiniProfiler
-            context.HttpContext.Items.Add("StartNew", MiniProfiler.StartNew("StartNew"));
+            context.HttpContext.Items.Add("StartNew", session.MiniProfiler);
 
             //权限验证
             if (context.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor)

@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using ProjectNameTemplate.Constant;
 using StackExchange.Redis;
 using System;
 using System.Collections.Generic;
@@ -36,7 +35,7 @@ namespace ProjectNameTemplate.Common.Helper
         }
 
         public RedisManager(int dbIndex)
-            : this(dbIndex, AppSetting.RedisConnection)
+            : this(dbIndex, ConfigurationManager.GetConfig("RedisConnection"))
         {
         }
 
