@@ -5,7 +5,7 @@ namespace ProjectNameTemplate.Host.Models
 {
     public class ResultBase : ResultBase<string>
     {
-        public int State { get; set; }
+      
     }
 
     public class ResultBase<T>
@@ -37,5 +37,6 @@ namespace ProjectNameTemplate.Host.Models
         /// 请求跟踪id
         /// </summary>
         public Guid TrackId { get; set; }
+        public int State { get; set; }
     }
 }

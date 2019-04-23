@@ -80,7 +80,10 @@ namespace ProjectNameTemplate.Host
             });
 
             //TODO  这里修改成需要映射的类库集合
-            AutoMapperModule.Initialize(Assembly.Load("ProjectNameTemplate.Host").GetTypes());
+            var autpTypes = Assembly.Load("ProjectNameTemplate.Host").GetTypes().ToList();
+            var autpTypes = Assembly.Load("ProjectNameTemplate.Application").GetTypes().ToList();
+            autpTypes.AddRange(Assembly.Load("ProjectNameTemplate.Core").GetTypes().ToList());
+            AutoMapperModule.Initialize(autpTypes);
 
             return new AutofacServiceProvider(InitContainerBuilder(services));//第三方IOC接管 core内置DI容器 
         }
@@ -88,16 +91,7 @@ namespace ProjectNameTemplate.Host
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseDeveloperExceptionPage();
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
-            //else
-            //{
-            //    app.UseExceptionHandler("/Home/Error");
-            //}
-
+            app.UseDeveloperExceptionPage();        
             app.UseStaticFiles();
             app.UseCookiePolicy();
 

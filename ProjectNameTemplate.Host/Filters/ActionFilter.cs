@@ -76,14 +76,13 @@ namespace ProjectNameTemplate.Host.Filters
             if (actionExecutedContext.Exception == null)
             {
                 dynamic contextResult = actionExecutedContext.Result ?? new EmptyResult();
-                var result = new
+                var result = new ResultBase<dynamic>()
                 {
                     IsSuccess = true,
                     State = 1,
                     Data = actionExecutedContext?.Result
                 };
-
-                //actionExecutedContext.Result = contextResult.Value is ResponseBase ? new JsonResult(contextResult.Value) : new JsonResult(result);
+                actionExecutedContext.Result = new JsonResult(result);
                 var resultStr = JsonConvert.SerializeObject(result);
                 var maxLenght = resultStr.Length > 1000 ? 1000 : resultStr.Length;
                 Logger.Debug($"ActionEnd - HashCode:{GetHashCode()} 耗时:{seconds}秒 Result:{resultStr.Substring(0, maxLenght)}");
