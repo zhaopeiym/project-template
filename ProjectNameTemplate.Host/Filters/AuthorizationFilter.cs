@@ -4,6 +4,7 @@ using ProjectNameTemplate.Common.Extensions;
 using ProjectNameTemplate.Core;
 using Serilog;
 using StackExchange.Profiling;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,6 +27,12 @@ namespace ProjectNameTemplate.Host.Filters
         public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
             session.MiniProfiler = MiniProfiler.StartNew("StartNew");
+            session.TrackId = Guid.NewGuid();
+            if (context.HttpContext.Request.Headers.Keys.Contains("ParentTrackId"))
+            {
+                var ParentTrackId = context.HttpContext.Request.Headers["ParentTrackId"].ToString();
+                session.ParentTrackId = Guid.Parse(ParentTrackId);
+            }
             //开启MiniProfiler
             context.HttpContext.Items.Add("StartNew", session.MiniProfiler);
 

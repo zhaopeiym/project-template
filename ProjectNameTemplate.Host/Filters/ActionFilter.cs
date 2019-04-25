@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using ProjectNameTemplate.Common.Extensions;
 using ProjectNameTemplate.Core;
+using ProjectNameTemplate.Host.Models;
 using StackExchange.Profiling;
 using System;
 using System.Collections.Generic;
@@ -10,7 +12,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using ProjectNameTemplate.Host.Models;
 
 namespace ProjectNameTemplate.Host.Filters
 {
@@ -34,6 +35,17 @@ namespace ProjectNameTemplate.Host.Filters
         {
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Restart();//开始监视代码运行时间
+            var isWebApi = false;
+            if (context.ActionDescriptor is ControllerActionDescriptor controllerActionDescriptor)
+            {
+                //控制器上的权限
+                var authorizeList = controllerActionDescriptor.
+                    ControllerTypeInfo.
+                    GetCustomAttributes(true).
+                    Where(a => a.GetType().Equals(typeof(ApiControllerAttribute)))
+                    .ToList();
+                isWebApi = authorizeList.IsAny();
+            }
 
             #region 执行前
 
@@ -47,14 +59,15 @@ namespace ProjectNameTemplate.Host.Filters
                 var errList = context.ModelState.Values.SelectMany(t => t.Errors.Select(e => string.IsNullOrWhiteSpace(e.Exception?.Message) ? e.ErrorMessage : e.Exception?.Message)).ToList();
 
                 Logger.Error($"实体验证失败 - HashCode:{GetHashCode()} {string.Join(" ", errList)}");
-
-                context.Result = new JsonResult(new ResultBase()
-                {
-                    ErrorList = errList.ToList(),
-                    IsSuccess = false,
-                    State = 400,
-                    ErrorMsg = string.Join(" ", errList).Trim()
-                });
+                if (isWebApi)
+                    context.Result = new JsonResult(new ResultBase()
+                    {
+                        ErrorList = errList.ToList(),
+                        IsSuccess = false,
+                        State = 400,
+                        ErrorMsg = string.Join(" ", errList).Trim(),
+                        TrackId = session.TrackId
+                    });
                 return;
             }
             #endregion
@@ -76,13 +89,16 @@ namespace ProjectNameTemplate.Host.Filters
             if (actionExecutedContext.Exception == null)
             {
                 dynamic contextResult = actionExecutedContext.Result ?? new EmptyResult();
+
                 var result = new ResultBase<dynamic>()
                 {
                     IsSuccess = true,
                     State = 1,
-                    Data = actionExecutedContext?.Result
+                    Data = actionExecutedContext?.Result,
+                    TrackId = session.TrackId
                 };
-                actionExecutedContext.Result = new JsonResult(result);
+                if (isWebApi)
+                    actionExecutedContext.Result = new JsonResult(result);
                 var resultStr = JsonConvert.SerializeObject(result);
                 var maxLenght = resultStr.Length > 1000 ? 1000 : resultStr.Length;
                 Logger.Debug($"ActionEnd - HashCode:{GetHashCode()} 耗时:{seconds}秒 Result:{resultStr.Substring(0, maxLenght)}");
@@ -106,13 +122,14 @@ namespace ProjectNameTemplate.Host.Filters
                                                                     耗时:{seconds}秒 
                                                                     Url:{requestUrl}                                                                  
                                                                     Err:{actionExecutedContext.Exception.Message}");
-
-                actionExecutedContext.Result = new JsonResult(new ResultBase()
-                {
-                    IsSuccess = false,
-                    State = 500,
-                    ErrorMsg = ErrMsg
-                });
+                if (isWebApi)
+                    actionExecutedContext.Result = new JsonResult(new ResultBase()
+                    {
+                        IsSuccess = false,
+                        State = 500,
+                        ErrorMsg = ErrMsg,
+                        TrackId = session.TrackId
+                    });
                 #endregion
 
                 //actionExecutedContext.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

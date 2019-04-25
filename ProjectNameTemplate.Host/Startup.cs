@@ -77,12 +77,14 @@ namespace ProjectNameTemplate.Host
                 //Set the comments path for the swagger json and ui.  
                 var xmlPath = Path.Combine(basePath, "ProjectNameTemplate.Host.xml");
                 options.IncludeXmlComments(xmlPath);
+
+                options.OperationFilter<OperationFilter>();
             });
 
             //TODO  这里修改成需要映射的类库集合
-            var autpTypes = Assembly.Load("ProjectNameTemplate.Host").GetTypes().ToList();
-            var autpTypes = Assembly.Load("ProjectNameTemplate.Application").GetTypes().ToList();
+            var autpTypes = Assembly.Load("ProjectNameTemplate.Host").GetTypes().ToList();            
             autpTypes.AddRange(Assembly.Load("ProjectNameTemplate.Core").GetTypes().ToList());
+            autpTypes.AddRange(Assembly.Load("ProjectNameTemplate.Application").GetTypes().ToList());
             AutoMapperModule.Initialize(autpTypes);
 
             return new AutofacServiceProvider(InitContainerBuilder(services));//第三方IOC接管 core内置DI容器 
