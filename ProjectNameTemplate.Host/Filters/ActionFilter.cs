@@ -94,7 +94,7 @@ namespace ProjectNameTemplate.Host.Filters
                 {
                     IsSuccess = true,
                     State = 1,
-                    Data = actionExecutedContext?.Result,
+                    Data = (contextResult is EmptyResult) ? null : contextResult.Value, //actionExecutedContext?.Result,
                     TrackId = session.TrackId
                 };
                 if (isWebApi)
