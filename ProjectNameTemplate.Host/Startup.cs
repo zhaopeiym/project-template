@@ -42,6 +42,21 @@ namespace ProjectNameTemplate.Host
             // 日志配置
             LogConfig();
 
+            #region 跨域
+#if DEBUG
+            services.AddCors(options =>
+                options.AddPolicy("AllowSameDomain",
+                     builder => builder
+                     .AllowAnyMethod()
+                     .AllowAnyHeader()
+                     .AllowAnyOrigin()    //允许任何来源的主机访问（debug开发允许跨域）
+                     .AllowCredentials()  //指定处理cookie
+                     ));
+#else
+            services.AddCors(options => options.AddPolicy("AllowSameDomain", builder => { }));        
+#endif
+            #endregion
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.

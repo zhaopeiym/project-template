@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>D:\Users\benny\Documents\Code\project-template\ProjectNameTemplate.Host\ProjectNameTemplate.Host.xml</DocumentationFile>
+    <DocumentationFile>\project-template\ProjectNameTemplate.Host\ProjectNameTemplate.Host.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>\project-template\ProjectNameTemplate.Host\ProjectNameTemplate.Host.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

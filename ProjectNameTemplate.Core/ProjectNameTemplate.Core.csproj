@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProjectNameTemplate.Common\ProjectNameTemplate.Common.csproj" />
+    <ProjectReference Include="..\ProjectNameTemplate.Constant\ProjectNameTemplate.Constant.csproj" />
   </ItemGroup>
 
   <ItemGroup>
