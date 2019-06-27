@@ -89,7 +89,8 @@ namespace ProjectNameTemplate.Host.Filters
             if (actionExecutedContext.Exception == null)
             {
                 dynamic contextResult = actionExecutedContext.Result ?? new EmptyResult();
-
+                if (contextResult is FileStreamResult)//文件流
+                    return;
                 var result = new ResultBase<dynamic>()
                 {
                     IsSuccess = true,
