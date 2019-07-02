@@ -32,5 +32,8 @@ namespace ProjectNameTemplate.Infrastructure.Entitys
         /// 标签
         /// </summary>
         public long? Tag { get; set; }
+        public string ControllerName { get; set; }
+        public string ActionName { get; set; }
+        public string RequestUrl { get; set; }
     }
 }

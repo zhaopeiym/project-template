@@ -11,5 +11,8 @@ namespace ProjectNameTemplate.Core
         string UserName { get; set; }
 
         object MiniProfiler { get; set; }
+        string ControllerName { get; set; }
+        string RequestUrl { get; set; }
+        string ActionName { get; set; }
     }
 }

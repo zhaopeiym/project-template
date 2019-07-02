@@ -110,7 +110,10 @@ namespace ProjectNameTemplate.Infrastructure
                 SQL = sql,
                 UserId = session.UserId,
                 UserName = session.UserName,
-                Tag = tag
+                Tag = tag,
+                ControllerName  = session.ControllerName,
+                ActionName = session.ActionName,
+                RequestUrl = session.RequestUrl,
             };
         }
 

@@ -48,10 +48,14 @@ namespace ProjectNameTemplate.Host.Filters
             }
 
             #region 执行前
-
+            if (context.ActionDescriptor.RouteValues.Keys.Contains("action"))
+                session.ActionName = context.ActionDescriptor.RouteValues["action"];
+            if (context.ActionDescriptor.RouteValues.Keys.Contains("controller"))
+                session.ControllerName = context.ActionDescriptor.RouteValues["controller"];
             var inputList = context.ActionDescriptor.Parameters.Select(t => context.ActionArguments.Keys.Contains(t.Name) ? JsonConvert.SerializeObject(context.ActionArguments[t.Name]) : string.Empty).ToList();
             var parameterStr = string.Join(" ", inputList);
             var requestUrl = context.HttpContext.Request.Path.Value;
+            session.RequestUrl = requestUrl;
             Logger.Debug($"ActionBegin - HashCode:{GetHashCode()} Url:{requestUrl} Parameter:{parameterStr}");
 
             if (!context.ModelState.IsValid)

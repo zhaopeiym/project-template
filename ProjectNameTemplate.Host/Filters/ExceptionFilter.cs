@@ -1,17 +1,17 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using ProjectNameTemplate.Core;
 using ProjectNameTemplate.Host.Models;
-using Serilog;
 using System.Net;
 
 namespace ProjectNameTemplate.Host.Filters
 {
     public class ExceptionFilter : IExceptionFilter
     {
-        ILogger Logger;
-        public ExceptionFilter()
+        private ITalkLogger Logger;
+        public ExceptionFilter(ITalkLogger Logger)
         {
-            Logger = Log.Logger;
+            this.Logger = Logger;
         }
 
         public void OnException(ExceptionContext context)
@@ -23,8 +23,8 @@ namespace ProjectNameTemplate.Host.Filters
             {
                 IsSuccess = false,
                 State = 0,
-                ErrorMsg = context.Exception.Message +" " + context.Exception.StackTrace
-        });
+                ErrorMsg = context.Exception.Message + " " + context.Exception.StackTrace
+            });
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
             context.ExceptionHandled = true;
