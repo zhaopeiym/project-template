@@ -1,4 +1,5 @@
-﻿using Talk;
+﻿using ProjectNameTemplate.Core;
+using Talk;
 
 namespace ProjectNameTemplate.Application
 {
@@ -7,7 +8,7 @@ namespace ProjectNameTemplate.Application
         /// <summary>
         /// 日记记录
         /// </summary>
-        public Serilog.ILogger Logger { get; set; }
+        public ITalkLogger Logger { get; set; }
 
         public ManagerBase()
         {

@@ -1,4 +1,5 @@
 ﻿
+using ProjectNameTemplate.Core;
 using ProjectNameTemplate.Core.IRepository;
 using System.Data;
 
@@ -14,7 +15,7 @@ namespace ProjectNameTemplate.Repository
         /// <summary>
         /// 日记记录
         /// </summary>
-        public Serilog.ILogger Logger { get; set; }
+        public ITalkLogger Logger { get; set; }
 
         public RepositoryBase(IDBContext dBContext)
         {
