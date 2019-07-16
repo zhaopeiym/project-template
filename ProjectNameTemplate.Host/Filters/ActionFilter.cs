@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
 using ProjectNameTemplate.Common.Extensions;
 using ProjectNameTemplate.Core;
-using ProjectNameTemplate.Host.Models;
 using StackExchange.Profiling;
 using System;
 using System.Collections.Generic;
@@ -12,6 +11,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using Talk;
+using Talk.Contract;
 
 namespace ProjectNameTemplate.Host.Filters
 {
@@ -67,8 +68,7 @@ namespace ProjectNameTemplate.Host.Filters
                     context.Result = new JsonResult(new ResultBase()
                     {
                         ErrorList = errList.ToList(),
-                        IsSuccess = false,
-                        State = 400,
+                        Code = HttpCodeEnum.C412,
                         ErrorMsg = string.Join(" ", errList).Trim(),
                         TrackId = session.TrackId
                     });
@@ -96,9 +96,7 @@ namespace ProjectNameTemplate.Host.Filters
                 if (contextResult is FileStreamResult)//文件流
                     return;
                 var result = new ResultBase<dynamic>()
-                {
-                    IsSuccess = true,
-                    State = 1,
+                {                    
                     Data = (contextResult is EmptyResult) ? null : isWebApi ? contextResult.Value : null, //actionExecutedContext?.Result,
                     TrackId = session.TrackId
                 };
@@ -130,8 +128,7 @@ namespace ProjectNameTemplate.Host.Filters
                 if (isWebApi)
                     actionExecutedContext.Result = new JsonResult(new ResultBase()
                     {
-                        IsSuccess = false,
-                        State = 500,
+                        Code = HttpCodeEnum.C500,
                         ErrorMsg = ErrMsg,
                         TrackId = session.TrackId
                     });

@@ -1,8 +1,8 @@
 ﻿using Dapper.Contrib.Extensions;
 using MySql.Data.MySqlClient;
-using ProjectNameTemplate.Constant;
 using ProjectNameTemplate.Core;
 using ProjectNameTemplate.Core.IRepository;
+using ProjectNameTemplate.Infrastructure;
 using StackExchange.Profiling;
 using StackExchange.Profiling.Data;
 using System;
@@ -44,7 +44,7 @@ namespace ProjectNameTemplate.Repository
             get
             {
                 if (!string.IsNullOrEmpty(MySqlConn))
-                {                   
+                {
                     if (_dbConnection == null)
                     {
                         _dbConnection = new MySqlConnection(MySqlConn);

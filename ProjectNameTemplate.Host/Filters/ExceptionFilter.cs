@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using ProjectNameTemplate.Core;
-using ProjectNameTemplate.Host.Models;
 using System.Net;
+using Talk;
+using Talk.Contract;
 
 namespace ProjectNameTemplate.Host.Filters
 {
@@ -21,8 +22,7 @@ namespace ProjectNameTemplate.Host.Filters
 
             context.Result = new JsonResult(new ResultBase()
             {
-                IsSuccess = false,
-                State = 0,
+                Code = HttpCodeEnum.C500,
                 ErrorMsg = context.Exception.Message + " " + context.Exception.StackTrace
             });
             context.HttpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;

@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using ProjectNameTemplate.Common.Helper;
-using ProjectNameTemplate.Constant;
 using ProjectNameTemplate.Core;
 using ProjectNameTemplate.Infrastructure.Entitys;
 using Serilog;
@@ -111,7 +110,7 @@ namespace ProjectNameTemplate.Infrastructure
                 UserId = session.UserId,
                 UserName = session.UserName,
                 Tag = tag,
-                ControllerName  = session.ControllerName,
+                ControllerName = session.ControllerName,
                 ActionName = session.ActionName,
                 RequestUrl = session.RequestUrl,
             };

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using ProjectNameTemplate.Host.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace ProjectNameTemplate.Host.Controllers
 {

@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Talk.Extensions" Version="1.0.1.27" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\ProjectNameTemplate.Constant\ProjectNameTemplate.Constant.csproj" />
     <ProjectReference Include="..\ProjectNameTemplate.Core\ProjectNameTemplate.Core.csproj" />
   </ItemGroup>
