@@ -24,6 +24,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ProjectNameTemplate.Host.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="4.8.1" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.3.0" />
     <PackageReference Include="AutofacSerilogIntegration" Version="2.0.0" />
@@ -44,6 +48,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ProjectNameTemplate.Application\ProjectNameTemplate.Application.csproj" />
     <ProjectReference Include="..\ProjectNameTemplate.Common\ProjectNameTemplate.Common.csproj" />
+    <ProjectReference Include="..\ProjectNameTemplate.Contract\ProjectNameTemplate.Contract.csproj" />
     <ProjectReference Include="..\ProjectNameTemplate.Infrastructure\ProjectNameTemplate.Infrastructure.csproj" />
     <ProjectReference Include="..\ProjectNameTemplate.Repository\ProjectNameTemplate.Repository.csproj" />
   </ItemGroup>

@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup> 
+    <PackageReference Include="Talk" Version="0.0.0.24" />
+  </ItemGroup>
+</Project>
