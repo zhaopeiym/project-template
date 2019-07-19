@@ -156,31 +156,33 @@ namespace ProjectNameTemplate.Host
             //Serilog.Sinks.RollingFile
             //Serilog.Sinks.Async
             var basePath = "./File/logs";
+            var fileSize = 1024 * 1024 * 100;//100M
+            var fileCount = 5;
             Log.Logger = new LoggerConfiguration()
                                  .Enrich.FromLogContext()
                                  .MinimumLevel.Debug()
                                  .MinimumLevel.Override("System", LogEventLevel.Information)
                                  .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                                  .WriteTo.Logger(lg => lg.Filter.ByIncludingOnly(p => p.Level == LogEventLevel.Debug).WriteTo.Async(
-                                     a => a.RollingFile(basePath + "/log-{Date}-Debug.txt")
+                                     a => a.RollingFile(basePath + "/log-{Hour}-Debug.txt", fileSizeLimitBytes: fileSize, retainedFileCountLimit: fileCount)
                                  ))
                                  .WriteTo.Logger(lg => lg.Filter.ByIncludingOnly(p => p.Level == LogEventLevel.Information).WriteTo.Async(
-                                     a => a.RollingFile(basePath + "/log-{Date}-Information.txt")
+                                     a => a.RollingFile(basePath + "/log-{Date}-Information.txt", fileSizeLimitBytes: fileSize, retainedFileCountLimit: fileCount)
                                  ))
                                  .WriteTo.Logger(lg => lg.Filter.ByIncludingOnly(p => p.Level == LogEventLevel.Warning).WriteTo.Async(
-                                     a => a.RollingFile(basePath + "/log-{Date}-Warning.txt")
+                                     a => a.RollingFile(basePath + "/log-{Date}-Warning.txt", fileSizeLimitBytes: fileSize, retainedFileCountLimit: fileCount)
                                  ))
                                  .WriteTo.Logger(lg => lg.Filter.ByIncludingOnly(p => p.Level == LogEventLevel.Error).WriteTo.Async(
-                                     a => a.RollingFile(basePath + "/log-{Date}-Error.txt")
+                                     a => a.RollingFile(basePath + "/log-{Date}-Error.txt", fileSizeLimitBytes: fileSize, retainedFileCountLimit: fileCount)
                                  ))
                                  .WriteTo.Logger(lg => lg.Filter.ByIncludingOnly(p => p.Level == LogEventLevel.Fatal).WriteTo.Async(
-                                     a => a.RollingFile(basePath + "/log-{Date}-Fatal.txt")
+                                     a => a.RollingFile(basePath + "/log-{Date}-Fatal.txt", fileSizeLimitBytes: fileSize, retainedFileCountLimit: fileCount)
                                  ))
                                  //所有情况
                                  .WriteTo.Logger(lg => lg.Filter.ByIncludingOnly(p => true)).WriteTo.Async(
                                      a =>
                                      {
-                                         a.RollingFile(basePath + "/log-{Date}-All.txt");
+                                         a.RollingFile(basePath + "/log-{Hour}-All.txt", fileSizeLimitBytes: fileSize, retainedFileCountLimit: fileCount);
 
                                          #region 存入ES
                                          //var url = ConfigurationManager.GetSection("ESURL");

@@ -13,6 +13,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="File\logs\**" />
+    <Content Remove="File\logs\**" />
+    <EmbeddedResource Remove="File\logs\**" />
+    <None Remove="File\logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="File\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -30,7 +38,7 @@
     <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="5.7.0" />
     <PackageReference Include="Serilog.Sinks.RollingFile" Version="3.3.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
-    <PackageReference Include="Talk" Version="0.0.0.24" />
+    <PackageReference Include="Talk" Version="0.0.0.26" />
     <PackageReference Include="Talk.Linq.Extensions" Version="1.0.2.14" />
   </ItemGroup>
 

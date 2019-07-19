@@ -100,7 +100,9 @@ namespace ProjectNameTemplate.WebApi.Filters
                     Data = (contextResult is EmptyResult) ? null : isWebApi ? contextResult.Value : null, //actionExecutedContext?.Result,
                     TrackId = session.TrackId
                 };
-                if (isWebApi)
+                //if (isWebApi)
+                //    actionExecutedContext.Result = new JsonResult(result);
+                if (!session.NoJsonResult)
                     actionExecutedContext.Result = new JsonResult(result);
                 var resultStr = JsonConvert.SerializeObject(result);
                 var maxLenght = resultStr.Length > 1000 ? 1000 : resultStr.Length;

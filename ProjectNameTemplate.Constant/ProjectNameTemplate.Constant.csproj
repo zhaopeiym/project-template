@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Talk" Version="0.0.0.24" />
+    <PackageReference Include="Talk" Version="0.0.0.26" />
   </ItemGroup>
 
 </Project>

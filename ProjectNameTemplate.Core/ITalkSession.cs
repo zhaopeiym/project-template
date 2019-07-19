@@ -14,5 +14,6 @@ namespace ProjectNameTemplate.Core
         string ControllerName { get; set; }
         string RequestUrl { get; set; }
         string ActionName { get; set; }
+        bool NoJsonResult { get; set; }
     }
 }

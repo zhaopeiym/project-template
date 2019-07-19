@@ -13,5 +13,6 @@ namespace ProjectNameTemplate.Infrastructure
         public string ControllerName { get; set; }
         public string ActionName { get; set; }
         public string RequestUrl { get; set; }
+        public bool NoJsonResult { get; set; }
     }
 }

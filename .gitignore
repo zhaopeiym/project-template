@@ -306,3 +306,4 @@ OpenCover/
 /ProjectNameTemplate.CodeGenerator/config.json
 /ProjectNameTemplate.Host/File/logs
 /ProjectNameTemplate.Host/File/logs
+/ProjectNameTemplate.WebApi/File/logs

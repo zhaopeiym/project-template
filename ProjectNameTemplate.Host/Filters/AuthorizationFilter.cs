@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using ProjectNameTemplate.Common.Extensions;
 using ProjectNameTemplate.Core;
+using ProjectNameTemplate.Host.Attributes;
 using Serilog;
 using StackExchange.Profiling;
 using System;
@@ -48,6 +49,12 @@ namespace ProjectNameTemplate.Host.Filters
                 //Action上的权限
                 authorizeList.AddRange(controllerActionDescriptor.MethodInfo.GetCustomAttributes(inherit: true)
                   .Where(a => a.GetType().Equals(typeof(AuthorizeAttribute))).ToList());
+
+                var noJsonResultAttribute = controllerActionDescriptor.MethodInfo
+                      .GetCustomAttributes(false)
+                      .Where(a => a.GetType().Equals(typeof(NoJsonResultAttribute)))
+                      .ToList();
+                session.NoJsonResult = noJsonResultAttribute.IsAny();
 
                 //只要标注了AuthorizeAttribute，则必须是登录状态
                 if (authorizeList.IsAny())
