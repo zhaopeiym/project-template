@@ -62,6 +62,9 @@ namespace ProjectNameTemplate.Host
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            //替换控制器所有者  http://www.cnblogs.com/GuZhenYin/p/8301500.html
+            services.Replace(ServiceDescriptor.Transient<IControllerActivator, ServiceBasedControllerActivator>());
+
             //https://docs.microsoft.com/zh-cn/aspnet/core/web-api/?view=aspnetcore-2.1
             services.Configure<ApiBehaviorOptions>(options =>
             {

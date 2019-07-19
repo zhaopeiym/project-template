@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.PlatformAbstractions;
 using ProjectNameTemplate.WebApi.Filters;
 using Serilog;
@@ -61,6 +63,9 @@ namespace ProjectNameTemplate.WebApi
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            //替换控制器所有者  http://www.cnblogs.com/GuZhenYin/p/8301500.html
+            services.Replace(ServiceDescriptor.Transient<IControllerActivator, ServiceBasedControllerActivator>());
 
             //https://docs.microsoft.com/zh-cn/aspnet/core/web-api/?view=aspnetcore-2.1
             services.Configure<ApiBehaviorOptions>(options =>
