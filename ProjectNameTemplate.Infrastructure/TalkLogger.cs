@@ -30,7 +30,7 @@ namespace ProjectNameTemplate.Infrastructure
         {
             // https://github.com/serilog/serilog-sinks-elasticsearch/issues/182         
             var model = GetLogModel(message, sql, executionTime, tag);
-            Log.Logger.Debug("{@item} {@trackid} {@parenttrackid}", model, session.TrackId, session.ParentTrackId);
+            Log.Logger.Debug("{@item} {@trackid}", model, session.TrackId);
             if (sendLogMail) SendLogMail("日志邮件【Debug】", $"{JsonConvert.SerializeObject(model)} {session.TrackId}", LogEventLevel.Debug);
         }
 
@@ -45,7 +45,7 @@ namespace ProjectNameTemplate.Infrastructure
         public void Error(string message, string sql = null, decimal? executionTime = null, long? tag = null, bool sendLogMail = true)
         {
             var model = GetLogModel(message, sql, executionTime, tag);
-            Log.Logger.Error("{@item} {@trackid} {@parenttrackid}", model, session.TrackId, session.ParentTrackId);
+            Log.Logger.Error("{@item} {@trackid}", model, session.TrackId);
             if (sendLogMail) SendLogMail("日志邮件【Error】", $"{JsonConvert.SerializeObject(model)} {session.TrackId}", LogEventLevel.Error);
         }
 
@@ -61,42 +61,42 @@ namespace ProjectNameTemplate.Infrastructure
         public void Error(Exception ex, string message, string sql = null, decimal? executionTime = null, long? tag = null, bool sendLogMail = true)
         {
             var model = GetLogModel(message, sql, executionTime, tag);
-            Log.Logger.Error(ex, "{@item} {@trackid} {@parenttrackid}", model, session.TrackId, session.ParentTrackId);
+            Log.Logger.Error(ex, "{@item} {@trackid}", model, session.TrackId);
             if (sendLogMail) SendLogMail("日志邮件【Error】", $"{JsonConvert.SerializeObject(model)} {session.TrackId}", LogEventLevel.Error);
         }
 
         public void Fatal(string message, string sql = null, decimal? executionTime = null, long? tag = null, bool sendLogMail = true)
         {
             var model = GetLogModel(message, sql, executionTime, tag);
-            Log.Logger.Fatal("{@item} {@trackid} {@parenttrackid}", model, session.TrackId, session.ParentTrackId);
+            Log.Logger.Fatal("{@item} {@trackid}", model, session.TrackId);
             if (sendLogMail) SendLogMail("日志邮件【Fatal】", $"{JsonConvert.SerializeObject(model)} {session.TrackId}", LogEventLevel.Fatal);
         }
 
         public void Information(string message, string sql = null, decimal? executionTime = null, long? tag = null, bool sendLogMail = true)
         {
             var model = GetLogModel(message, sql, executionTime, tag);
-            Log.Logger.Information("{@item} {@trackid} {@parenttrackid}", model, session.TrackId, session.ParentTrackId);
+            Log.Logger.Information("{@item} {@trackid}", model, session.TrackId);
             if (sendLogMail) SendLogMail("日志邮件【Information】", $"{JsonConvert.SerializeObject(model)} {session.TrackId}", LogEventLevel.Information);
         }
 
         public void Verbose(string message, string sql = null, decimal? executionTime = null, long? tag = null, bool sendLogMail = true)
         {
             var model = GetLogModel(message, sql, executionTime, tag);
-            Log.Logger.Verbose("{@item} {@trackid} {@parenttrackid}", model, session.TrackId, session.ParentTrackId);
+            Log.Logger.Verbose("{@item} {@trackid}", model, session.TrackId);
             if (sendLogMail) SendLogMail("日志邮件【Verbose】", $"{JsonConvert.SerializeObject(model)} {session.TrackId}", LogEventLevel.Verbose);
         }
 
         public void Warning(string message, string sql = null, decimal? executionTime = null, long? tag = null, bool sendLogMail = true)
         {
             var model = GetLogModel(message, sql, executionTime, tag);
-            Log.Logger.Warning("{@item} {@trackid} {@parenttrackid}", model, session.TrackId, session.ParentTrackId);
+            Log.Logger.Warning("{@item} {@trackid}", model, session.TrackId);
             if (sendLogMail) SendLogMail("日志邮件【Warning】", $"{JsonConvert.SerializeObject(model)} {session.TrackId}", LogEventLevel.Warning);
         }
 
         public void Write(LogEventLevel level, string message, string sql = null, decimal? executionTime = null, long? tag = null, bool sendLogMail = true)
         {
             var model = GetLogModel(message, sql, executionTime, tag);
-            Log.Logger.Write(level, "{@item} {@trackid} {@parenttrackid}", model, session.TrackId, session.ParentTrackId);
+            Log.Logger.Write(level, "{@item} {@trackid}", model, session.TrackId);
             if (sendLogMail) SendLogMail($"日志邮件【{level.ToString()}】", $"{JsonConvert.SerializeObject(model)} {session.TrackId}", level);
         }
         private LogModel GetLogModel(string message, string sql, decimal? executionTime, long? tag = null, bool sendLogMail = true)
@@ -113,6 +113,8 @@ namespace ProjectNameTemplate.Infrastructure
                 ControllerName = session.ControllerName,
                 ActionName = session.ActionName,
                 RequestUrl = session.RequestUrl,
+                ParentTrackId = session.RPCContext?.TrackId,
+                RequestCode = session.RPCContext?.RequestCode,
             };
         }
 

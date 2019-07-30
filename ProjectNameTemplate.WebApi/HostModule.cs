@@ -10,6 +10,7 @@ namespace ProjectNameTemplate.WebApi
     [DependsOn(typeof(CoreModule),
         typeof(ApplicationModule),
         typeof(RepositoryModule),
+        typeof(TalkModule),
         typeof(InfrastructureModule))]
     public class HostModule : AppModule
     {

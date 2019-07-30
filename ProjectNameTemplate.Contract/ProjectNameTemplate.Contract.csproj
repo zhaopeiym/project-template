@@ -5,6 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup> 
-    <PackageReference Include="Talk" Version="0.0.0.26" />
+    <PackageReference Include="Talk" Version="0.0.0.32" />
   </ItemGroup>
 </Project>

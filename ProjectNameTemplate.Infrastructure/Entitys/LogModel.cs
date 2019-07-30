@@ -35,5 +35,7 @@ namespace ProjectNameTemplate.Infrastructure.Entitys
         public string ControllerName { get; set; }
         public string ActionName { get; set; }
         public string RequestUrl { get; set; }
+        public Guid? ParentTrackId { get; set; }
+        public string RequestCode { get; set; }
     }
 }

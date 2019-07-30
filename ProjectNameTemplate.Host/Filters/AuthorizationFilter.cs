@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Newtonsoft.Json;
 using ProjectNameTemplate.Common.Extensions;
 using ProjectNameTemplate.Core;
 using ProjectNameTemplate.Host.Attributes;
@@ -8,6 +9,8 @@ using StackExchange.Profiling;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
+using Talk.Contract;
 
 namespace ProjectNameTemplate.Host.Filters
 {
@@ -29,10 +32,11 @@ namespace ProjectNameTemplate.Host.Filters
         {
             session.MiniProfiler = MiniProfiler.StartNew("StartNew");
             session.TrackId = Guid.NewGuid();
-            if (context.HttpContext.Request.Headers.Keys.Contains("ParentTrackId"))
+            if (context.HttpContext.Request.Headers.Keys.Contains("RPCContext"))
             {
-                var ParentTrackId = context.HttpContext.Request.Headers["ParentTrackId"].ToString();
-                session.ParentTrackId = Guid.Parse(ParentTrackId);
+                var rpcContextString = context.HttpContext.Request.Headers["RPCContext"].ToString();
+                var RPCContext = JsonConvert.DeserializeObject<RPCContext>(HttpUtility.UrlDecode(rpcContextString));
+                session.RPCContext = RPCContext;
             }
             //开启MiniProfiler
             context.HttpContext.Items.Add("StartNew", session.MiniProfiler);
