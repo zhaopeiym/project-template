@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Newtonsoft.Json;
 using ProjectNameTemplate.Common.Extensions;
 using ProjectNameTemplate.Core;
 using ProjectNameTemplate.WebApi.Attributes;
@@ -8,6 +9,8 @@ using StackExchange.Profiling;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web;
+using Talk.Contract;
 
 namespace ProjectNameTemplate.WebApi.Filters
 {
