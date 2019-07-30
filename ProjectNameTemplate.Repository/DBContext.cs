@@ -105,8 +105,9 @@ namespace ProjectNameTemplate.Repository
         public void Dispose()
         {
             DbTransaction?.Dispose();
+            if (_dbConnection?.State == ConnectionState.Open)
+                _dbConnection?.Close();
             _dbConnection?.Dispose();
-            _dbConnection?.Close();
         }
     }
 }
