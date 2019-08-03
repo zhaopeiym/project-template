@@ -101,7 +101,7 @@ namespace ProjectNameTemplate.Host
 
             //TODO  这里修改成需要映射的类库集合
             var autpTypes = Assembly.Load("ProjectNameTemplate.Host").GetTypes().ToList();
-            autpTypes.AddRange(Assembly.Load("ProjectNameTemplate.Contract").GetTypes().ToList());
+            autpTypes.AddRange(Assembly.Load("ProjectNameTemplate.Host.Contract").GetTypes().ToList());
             autpTypes.AddRange(Assembly.Load("ProjectNameTemplate.Core").GetTypes().ToList());
             autpTypes.AddRange(Assembly.Load("ProjectNameTemplate.Application").GetTypes().ToList());
             AutoMapperModule.Initialize(autpTypes);

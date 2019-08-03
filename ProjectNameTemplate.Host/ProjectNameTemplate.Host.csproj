@@ -47,8 +47,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProjectNameTemplate.Application\ProjectNameTemplate.Application.csproj" />
+    <ProjectReference Include="..\ProjectNameTemplate.CodeGenerator\ProjectNameTemplate.CodeGenerator.csproj" />
     <ProjectReference Include="..\ProjectNameTemplate.Common\ProjectNameTemplate.Common.csproj" />
-    <ProjectReference Include="..\ProjectNameTemplate.Contract\ProjectNameTemplate.Contract.csproj" />
     <ProjectReference Include="..\ProjectNameTemplate.Infrastructure\ProjectNameTemplate.Infrastructure.csproj" />
     <ProjectReference Include="..\ProjectNameTemplate.Repository\ProjectNameTemplate.Repository.csproj" />
   </ItemGroup>
