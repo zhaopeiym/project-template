@@ -160,13 +160,13 @@ namespace ProjectNameTemplate.WebApi
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "MsSystem API V1");
             });
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{action}/{controller}/{id?}",
-                    defaults: new { controller = "Home", action = "Index" });
-            });
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{action}/{controller}/{id?}",
+            //        defaults: new { controller = "Home", action = "Index" });
+            //});
         }
 
         /// <summary>
