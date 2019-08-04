@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.PlatformAbstractions;
+using ProjectNameTemplate.Common.Helper;
 using ProjectNameTemplate.WebApi.Filters;
 using Serilog;
 using Serilog.Events;
@@ -112,9 +113,46 @@ namespace ProjectNameTemplate.WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            app.UseDeveloperExceptionPage();
-            app.UseStaticFiles();
-            app.UseCookiePolicy();
+            if (env.IsDevelopment()) 
+                app.UseDeveloperExceptionPage(); 
+
+            #region angular 路由配置 http://www.cnblogs.com/sunjie9606/p/7494292.html  
+            //把ng发布的dist文件夹下的内容拷贝到.net core的wwwroot文件夹下
+            app.Use(async (context, next) =>
+            {
+                try
+                {
+                    await next();
+                }
+                catch (Exception ex)
+                {
+                    Log.Logger.Error(ex, ex.Message);
+                    MailHelper.SendMail(new SendMailModel()
+                    {
+                        Content = $"{ex.Message} {ex.StackTrace}",
+                        Title = "服务通 - 未知异常",
+                        //TODO
+                    });
+                    throw;
+                }
+
+                //当系统返回404状态码
+                //并且访问的Request不包含文件扩展名
+                //并且访问Request不是以“/api/”开头的访问
+                //直接将其跳转到 /index.html
+                if (context.Response.StatusCode == 404 &&
+                   !System.IO.Path.HasExtension(context.Request.Path.Value) &&
+                   !context.Request.Path.Value.StartsWith("/api/"))
+                {
+                    context.Request.Path = "/index.html";
+                    await next();
+                }
+            });
+
+            app.UseMvcWithDefaultRoute();//使用MVC的默认路由中间件。
+            app.UseDefaultFiles();//启用默认文档提供器中间件，他会对只有主机的URL进行访问时搜索default.html、default.htm、index.html、index.htm文件，如果有就返回内容。
+            app.UseStaticFiles();//启用程序的静态文件支持，也就是启用wwwroot文件夹可以通过URL访问。
+            #endregion
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
