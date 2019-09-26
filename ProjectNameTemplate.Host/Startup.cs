@@ -10,10 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.OpenApi.Models;
 using ProjectNameTemplate.Host.Filters;
 using Serilog;
 using Serilog.Events;
-using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Linq;
@@ -37,7 +37,7 @@ namespace ProjectNameTemplate.Host
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             // 日志配置
             LogConfig();
@@ -47,9 +47,10 @@ namespace ProjectNameTemplate.Host
             services.AddCors(options =>
                 options.AddPolicy("AllowSameDomain",
                      builder => builder
+                     .WithOrigins("http://example.com", "http://www.contoso.com")
                      .AllowAnyMethod()
                      .AllowAnyHeader()
-                     .AllowAnyOrigin()    //允许任何来源的主机访问（debug开发允许跨域）
+                     //.AllowAnyOrigin()    //允许任何来源的主机访问（debug开发允许跨域）
                      .AllowCredentials()  //指定处理cookie
                      ));
 #else
@@ -75,16 +76,23 @@ namespace ProjectNameTemplate.Host
                 options.SuppressModelStateInvalidFilter = true;   //关闭自动验证对象属性并处理
             });
 
-            services.AddMvc(options =>
+            //services.AddMvc(options =>
+            //{
+            //    options.Filters.Add<AuthorizationFilter>();
+            //    options.Filters.Add<ActionFilter>();
+            //    options.Filters.Add<ExceptionFilter>();
+            //}).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddControllersWithViews(options =>
             {
                 options.Filters.Add<AuthorizationFilter>();
                 options.Filters.Add<ActionFilter>();
                 options.Filters.Add<ExceptionFilter>();
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            }).AddNewtonsoftJson();
 
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new Info
+                options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
                     Title = "MsSystem API"
@@ -101,12 +109,29 @@ namespace ProjectNameTemplate.Host
 
             //TODO  这里修改成需要映射的类库集合
             var autpTypes = Assembly.Load("ProjectNameTemplate.Host").GetTypes().ToList();
-            autpTypes.AddRange(Assembly.Load("ProjectNameTemplate.Host.Contract").GetTypes().ToList());
+            //autpTypes.AddRange(Assembly.Load("ProjectNameTemplate.Host.Contract").GetTypes().ToList());
             autpTypes.AddRange(Assembly.Load("ProjectNameTemplate.Core").GetTypes().ToList());
             autpTypes.AddRange(Assembly.Load("ProjectNameTemplate.Application").GetTypes().ToList());
             AutoMapperModule.Initialize(autpTypes);
 
-            return new AutofacServiceProvider(InitContainerBuilder(services));//第三方IOC接管 core内置DI容器 
+            //return new AutofacServiceProvider(InitContainerBuilder(services));//第三方IOC接管 core内置DI容器 
+        }
+
+        /// <summary>
+        /// 使用Autofac注入
+        /// </summary>
+        /// <param name="builder"></param>
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            var module = ModuleManager.Create<HostModule>();
+            var tyeps = typeof(Startup).Assembly
+                .GetTypes()
+                .Where(t => t.IsClass && t.Name.EndsWith("Controller"))
+                .ToArray();
+            //注入MVC控制器（配置属性注入）
+            builder.RegisterTypes(tyeps).PropertiesAutowired();
+            builder.RegisterLogger();//https://github.com/nblumhardt/autofac-serilog-integration            
+            module.ExternalBuilderInitialize(builder);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -116,18 +141,30 @@ namespace ProjectNameTemplate.Host
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            //https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-3.0
+            app.UseCors("AllowSameDomain");
+
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "MsSystem API V1");
             });
 
-            app.UseMvc(routes =>
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{action}/{controller}/{id?}",
+            //        defaults: new { controller = "Home", action = "Index" });
+            //});
+
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{action}/{controller}/{id?}",
-                    defaults: new { controller = "Home", action = "Index" });
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
 

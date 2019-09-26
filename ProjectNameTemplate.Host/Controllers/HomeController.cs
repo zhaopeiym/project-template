@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjectNameTemplate.Host.Attributes;
 
 namespace ProjectNameTemplate.Host.Controllers
 {
@@ -10,6 +11,7 @@ namespace ProjectNameTemplate.Host.Controllers
         [Route("/")]
         [Route("/Home")]
         [Route("/Home/Index")]
+        [NoJsonResultAttribute]
         public IActionResult Index()
         {
             return View();
