@@ -1,5 +1,4 @@
 ﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using AutofacSerilogIntegration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,11 +9,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.PlatformAbstractions;
+using Microsoft.OpenApi.Models;
 using ProjectNameTemplate.Common.Helper;
 using ProjectNameTemplate.WebApi.Filters;
 using Serilog;
 using Serilog.Events;
-using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Linq;
@@ -38,7 +37,7 @@ namespace ProjectNameTemplate.WebApi
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             // 日志配置
             LogConfig();
@@ -48,9 +47,10 @@ namespace ProjectNameTemplate.WebApi
             services.AddCors(options =>
                 options.AddPolicy("AllowSameDomain",
                      builder => builder
+                     .WithOrigins("http://example.com", "http://www.contoso.com")
                      .AllowAnyMethod()
                      .AllowAnyHeader()
-                     .AllowAnyOrigin()    //允许任何来源的主机访问（debug开发允许跨域）
+                     //.AllowAnyOrigin()    //允许任何来源的主机访问（debug开发允许跨域）
                      .AllowCredentials()  //指定处理cookie
                      ));
 #else
@@ -76,16 +76,23 @@ namespace ProjectNameTemplate.WebApi
                 options.SuppressModelStateInvalidFilter = true;   //关闭自动验证对象属性并处理
             });
 
-            services.AddMvc(options =>
+            //services.AddMvc(options =>
+            //{
+            //    options.Filters.Add<AuthorizationFilter>();
+            //    options.Filters.Add<ActionFilter>();
+            //    options.Filters.Add<ExceptionFilter>();
+            //}).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddControllersWithViews(options =>
             {
                 options.Filters.Add<AuthorizationFilter>();
                 options.Filters.Add<ActionFilter>();
                 options.Filters.Add<ExceptionFilter>();
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            }).AddNewtonsoftJson();
 
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new Info
+                options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
                     Title = "MsSystem API"
@@ -107,14 +114,14 @@ namespace ProjectNameTemplate.WebApi
             autpTypes.AddRange(Assembly.Load("ProjectNameTemplate.Application").GetTypes().ToList());
             AutoMapperModule.Initialize(autpTypes);
 
-            return new AutofacServiceProvider(InitContainerBuilder(services));//第三方IOC接管 core内置DI容器 
+            //return new AutofacServiceProvider(InitContainerBuilder(services));//第三方IOC接管 core内置DI容器 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment()) 
-                app.UseDeveloperExceptionPage(); 
+            if (env.IsDevelopment())
+                app.UseDeveloperExceptionPage();
 
             #region angular 路由配置 http://www.cnblogs.com/sunjie9606/p/7494292.html  
             //把ng发布的dist文件夹下的内容拷贝到.net core的wwwroot文件夹下
@@ -149,16 +156,29 @@ namespace ProjectNameTemplate.WebApi
                 }
             });
 
-            app.UseMvcWithDefaultRoute();//使用MVC的默认路由中间件。
+            //app.UseMvcWithDefaultRoute();//使用MVC的默认路由中间件。
             app.UseDefaultFiles();//启用默认文档提供器中间件，他会对只有主机的URL进行访问时搜索default.html、default.htm、index.html、index.htm文件，如果有就返回内容。
             app.UseStaticFiles();//启用程序的静态文件支持，也就是启用wwwroot文件夹可以通过URL访问。
             #endregion
+
+            //https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-3.0
+            app.UseCors("AllowSameDomain");
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "MsSystem API V1");
             });
+
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
+            {
+                //endpoints.MapControllerRoute(
+                //    name: "default",
+                //    pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllers();
+            }); 
 
             //app.UseMvc(routes =>
             //{
@@ -170,24 +190,41 @@ namespace ProjectNameTemplate.WebApi
         }
 
         /// <summary>
-        /// 初始化 注入容器
+        /// 使用Autofac注入
         /// </summary>
-        private IContainer InitContainerBuilder(IServiceCollection services)
+        /// <param name="builder"></param>
+        public void ConfigureContainer(ContainerBuilder builder)
         {
-            services.AddDirectoryBrowser();
             var module = ModuleManager.Create<HostModule>();
-            var builder = module.ContainerBuilder;
             var tyeps = typeof(Startup).Assembly
                 .GetTypes()
                 .Where(t => t.IsClass && t.Name.EndsWith("Controller"))
                 .ToArray();
             //注入MVC控制器（配置属性注入）
             builder.RegisterTypes(tyeps).PropertiesAutowired();
-            builder.RegisterLogger();//https://github.com/nblumhardt/autofac-serilog-integration
-            builder.Populate(services);
-            module.Initialize();
-            return module.Container;
+            builder.RegisterLogger();//https://github.com/nblumhardt/autofac-serilog-integration            
+            module.ExternalBuilderInitialize(builder);
         }
+
+        ///// <summary>
+        ///// 初始化 注入容器
+        ///// </summary>
+        //private IContainer InitContainerBuilder(IServiceCollection services)
+        //{
+        //    services.AddDirectoryBrowser();
+        //    var module = ModuleManager.Create<HostModule>();
+        //    var builder = module.ContainerBuilder;
+        //    var tyeps = typeof(Startup).Assembly
+        //        .GetTypes()
+        //        .Where(t => t.IsClass && t.Name.EndsWith("Controller"))
+        //        .ToArray();
+        //    //注入MVC控制器（配置属性注入）
+        //    builder.RegisterTypes(tyeps).PropertiesAutowired();
+        //    builder.RegisterLogger();//https://github.com/nblumhardt/autofac-serilog-integration
+        //    builder.Populate(services);
+        //    module.Initialize();
+        //    return module.Container;
+        //}
 
         /// <summary>
         /// 日志配置

@@ -4,7 +4,7 @@ using ProjectNameTemplate.Core;
 
 namespace ProjectNameTemplate.WebApi
 {
-    [EnableCors("AllowSameDomain")]
+    //[EnableCors("AllowSameDomain")]
     [Route("api/[controller]/[Action]")]
     [ApiController]
     public class BaseApiController : ControllerBase

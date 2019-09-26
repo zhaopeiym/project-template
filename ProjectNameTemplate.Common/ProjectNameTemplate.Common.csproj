@@ -17,7 +17,7 @@
     <PackageReference Include="Serilog" Version="2.7.1" />
     <PackageReference Include="SharpZipLib" Version="1.0.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.0.601" />
-    <PackageReference Include="Talk" Version="0.0.0.32" />
+    <PackageReference Include="Talk" Version="0.0.0.45" />
   </ItemGroup>
 
 </Project>
